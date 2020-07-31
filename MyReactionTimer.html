@@ -1,0 +1,109 @@
+<html>
+    <head>
+    
+        <title>My Reaction Timer</title>
+        
+        <style type="text/css">
+            
+            body {
+                font-family: sans-serif;
+            }
+            #time-display {
+                font-weight: bold;
+            }
+            
+            #myShapes {
+                width: 200px;
+                height: 200px;
+                background-color: red;
+                display: none;
+                position: relative;
+
+            }
+        
+        
+        </style>
+    
+    </head>
+
+    <body>
+        
+        <h1>Test Your Reaction Time!</h1>
+        
+        <p>Click on the shapes as quickly as you can!</p>
+        
+        <p id="time-display">Your time: <span id="timeTaken"></span></p>
+        
+        <div id="myShapes"></div>
+        
+        <script type="text/javascript">
+            
+            var startTime = new Date().getTime();
+            
+            function getAColor() {
+                var letters = "0123456789ABCDEF".split('');
+                var color = '#';
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                
+                return color;
+            }
+            
+            function shapeSpawner() {
+                
+                var top = Math.random() * 400;
+                
+                var left = Math.random() * 400;
+                
+                var width = Math.random() * 300 + 50;
+                
+                if (Math.random() > 0.5) {
+                    
+                    document.getElementById("myShapes").style.borderRadius = "50%";
+                } else {
+                    
+                    document.getElementById("myShapes").style.borderRadius = "0%";
+                }
+                
+                document.getElementById("myShapes").style.backgroundColor = getAColor();
+                
+                document.getElementById("myShapes").style.width = width + "px";
+                
+                document.getElementById("myShapes").style.height = width + "px";
+                
+                document.getElementById("myShapes").style.top = top + "px";
+                
+                document.getElementById("myShapes").style.left = left + "px";
+                
+                document.getElementById("myShapes").style.display = "block";
+                
+                startTime = new Date().getTime();
+            }
+            
+            function spawnAfterDelay () {
+                
+                setTimeout(shapeSpawner, Math.random() * 1800);
+            }
+            
+            spawnAfterDelay();
+            
+            document.getElementById("myShapes").onclick = function() {
+                
+                var endTime = new Date().getTime();
+                
+                var elapsedTime = (endTime - startTime) / 1000;
+                
+                document.getElementById("timeTaken").innerHTML = elapsedTime + "s";
+                
+                document.getElementById("myShapes").style.display = "none";
+                
+                spawnAfterDelay();
+                
+            }
+        
+        </script>
+    
+    </body>
+
+</html>
